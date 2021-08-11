@@ -3,6 +3,7 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 const User = require('../lib/models/User.js');
+const users = require('../lib/controllers/users');
 
 describe('tardygram routes', () => {
   beforeEach(() => {
@@ -20,14 +21,17 @@ describe('tardygram routes', () => {
   });
 
   it('gets a user by id via GET', async () => {
-    const user = await User.insert({
+    await User.insert({ 
       username: 'testuser',
       avatarUrl: 'http://example.com/image.png',
-    
     });
 
-    const res = await request(app).get(`/api/v1/users/${user.id}`);
+    const res = await request(app).get(`/api/v1/users/${users.id}`);
 
-    expect(res.body).toEqual(user);
+    expect(res.body).toEqual({ 
+      id: 1,
+      username: 'testuser',
+      avatarUrl: 'http://example.com/image.png',
+    });
   });
 });
