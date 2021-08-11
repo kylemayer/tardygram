@@ -19,26 +19,15 @@ describe('tardygram routes', () => {
     });
   });
 
-  it('creates an image with a caption via POST', async () => {
-    const user = await User.insert('testuser', 'http://example.com/image.png'
-    );
-
-    const res = await request(app)
-      .post('/api/v1/posts')
-      .send({
-        user: user.id,
-        photo_url: 'http://example.com/image2.png',
-        caption: 'image caption',
-        tags: ['sunny', 'summer', 'water']
-      });
-
-    expect(res.body).toEqual({
-      id: '1',
+  it('gets a user by id via GET', async () => {
+    const user = await User.insert({
       username: 'testuser',
-      photo_url: 'http://example.com/image2.png',
-      caption: 'image caption',
-      tags: ['sunny', 'summer', 'water'],
+      avatarUrl: 'http://example.com/image.png',
+    
     });
+
+    const res = await request(app).get(`/api/v1/users/${user.id}`);
+
+    expect(res.body).toEqual(user);
   });
 });
-
