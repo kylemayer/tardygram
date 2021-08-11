@@ -10,7 +10,7 @@ describe('tardygram routes', () => {
   });
 
 
-  it('verify route displays the currently logged in user via GET', async () => {
+  it.skip('verify route displays the currently logged in user via GET', async () => {
     const res = await request(app).get('/api/v1/auth/verify');
 
     expect(res.body).toEqual({
