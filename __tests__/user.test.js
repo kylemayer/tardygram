@@ -3,7 +3,7 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 const User = require('../lib/models/User.js');
-const users = require('../lib/controllers/users');
+// const users = require('../lib/controllers/users');
 
 describe('tardygram routes', () => {
   beforeEach(() => {
@@ -11,7 +11,7 @@ describe('tardygram routes', () => {
   });
 
 
-  it.skip('verify route displays the currently logged in user via GET', async () => {
+  it('verify route displays the currently logged in user via GET', async () => {
     const res = await request(app).get('/api/v1/auth/verify');
 
     expect(res.body).toEqual({
@@ -27,7 +27,7 @@ describe('tardygram routes', () => {
 
     const res = await request(app).get(`/api/v1/users/${dummyUser.username}`);
 
-    expect(res.body).toEqual({ 
+    expect(res.body).toEqual({
       username: 'testuser',
       avatarUrl: 'http://example.com/image.png',
     });
