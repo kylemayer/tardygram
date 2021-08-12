@@ -5,8 +5,6 @@ const app = require('../lib/app');
 const User = require('../lib/models/User.js');
 // const users = require('../lib/controllers/users');
 
-
-
 jest.mock('../lib/middleware/ensure-auth.js', () => (req, res, next) => {
   req.user = {
     username: 'testuser',
