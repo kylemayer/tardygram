@@ -39,28 +39,32 @@ describe('tardygram post routes', () => {
   it('gets a list of posts', async () => {
     await User.insert('testuser', 'http://example.com/image.png');
 
-    const post = {
-      photoUrl: '/some-image.jpg',
+    const post1 = {
+      username: 'testuser',
+      photo_url: '/some-image.jpg',
       caption: 'new image',
       tags: ['one', 'two', 'three'],
     };
 
     const post2 = {
-      photoUrl: '/some-other-image.jpg',
+      username: 'testuser',
+      photo_url: '/some-other-image.jpg',
       caption: 'other new image',
       tags: ['one', 'two', 'four'],
     };
+    await request(app).post('/api/v1/posts').send(post1);
+    await request(app).post('/api/v1/posts').send(post2);
 
     return request(app)
       .get('/api/v1/posts')
       .then((res) => {
         expect(res.body).toEqual([
           {
-            id: 1,
-            ...post,
+            id: '1',
+            ...post1,
           },
           {
-            id: 2,
+            id: '2',
             ...post2,
           },
         ]);
