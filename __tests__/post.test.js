@@ -93,7 +93,7 @@ describe('tardygram post routes', () => {
     });
   });
 
-  it('deletes post by id', async () => {
+  it.only('deletes post by id', async () => {
     await User.insert('testuser', 'http://example.com/image.png');
 
     await request(app)
