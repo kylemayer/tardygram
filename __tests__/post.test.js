@@ -92,4 +92,22 @@ describe('tardygram post routes', () => {
       tags: ['sunny', 'summer', 'water'],
     });
   });
+
+  it('deletes post by id', async () => {
+    await User.insert('testuser', 'http://example.com/image.png');
+
+    await request(app)
+      .post('/api/v1/posts')
+      .send({
+        // user: user.id,
+        photo_url: 'http://example.com/image2.png',
+        caption: 'image caption',
+        tags: ['sunny', 'summer', 'water'],
+      });
+
+    const res = await request(app).delete('/api/v1/posts/1');
+    expect(res.body).toEqual({
+      message: 'that junk gone',
+    });
+  });
 });
