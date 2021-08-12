@@ -20,16 +20,14 @@ describe('tardygram routes', () => {
     });
   });
 
-  it('gets a user by id via GET', async () => {
-    await User.insert({ 
-      username: 'testuser',
-      avatarUrl: 'http://example.com/image.png',
-    });
+  it('gets a user by username via GET', async () => {
+    const dummy = 'testuser';
+    const dummyPicture = 'http://example.com/image.png';
+    const dummyUser = await User.insert(dummy, dummyPicture);
 
-    const res = await request(app).get(`/api/v1/users/${users.id}`);
+    const res = await request(app).get(`/api/v1/users/${dummyUser.username}`);
 
     expect(res.body).toEqual({ 
-      id: 1,
       username: 'testuser',
       avatarUrl: 'http://example.com/image.png',
     });
