@@ -5,11 +5,20 @@ const app = require('../lib/app');
 const User = require('../lib/models/User.js');
 // const users = require('../lib/controllers/users');
 
+
+
+jest.mock('../lib/middleware/ensure-auth.js', () => (req, res, next) => {
+  req.user = {
+    username: 'testuser',
+    avatarUrl: 'http://example.com/image.png',
+  };
+  next();
+});
+
 describe('tardygram routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
-
 
   it('verify route displays the currently logged in user via GET', async () => {
     const res = await request(app).get('/api/v1/auth/verify');
