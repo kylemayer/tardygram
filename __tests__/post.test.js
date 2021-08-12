@@ -4,6 +4,8 @@ const request = require('supertest');
 const app = require('../lib/app');
 const User = require('../lib/models/User.js');
 
+const caption = { caption: 'elise is a soi boi' };
+
 describe('tardygram post routes', () => {
   beforeEach(() => {
     return setup(pool);
@@ -103,5 +105,25 @@ describe('tardygram post routes', () => {
     expect(res.body).toEqual({
       message: 'that junk gone',
     });
+  });
+  it('updates the caption on a post via PATCH', async () => {
+    await User.insert('testuser', 'http://example.com/image.png');
+    await request(app)
+      .post('/api/v1/posts')
+      .send({
+        photo_url: 'http://example.com/image2.png',
+        caption: 'image caption',
+        tags: ['sunny', 'summer', 'water'],
+      });
+    return request(app)
+      .patch('/api/v1/posts/1')
+      .send({ caption: 'elise is a soi boi' })
+      .then((res) => {
+        expect(res.body).toEqual({
+          photo_url: 'http://example.com/image2.png',
+          caption: 'elise is a soi boi',
+          tags: ['sunny', 'summer', 'water'],
+        });
+      });
   });
 });
