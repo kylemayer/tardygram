@@ -4,12 +4,6 @@ const request = require('supertest');
 const app = require('../lib/app');
 const User = require('../lib/models/User.js');
 
-const post = {
-  photoUrl: '/some-image.jpg',
-  caption: 'new image',
-  tags: ['one', 'two', 'three'],
-};
-
 describe('tardygram post routes', () => {
   beforeEach(() => {
     return setup(pool);
@@ -93,7 +87,7 @@ describe('tardygram post routes', () => {
     });
   });
 
-  it.only('deletes post by id', async () => {
+  it('deletes post by id', async () => {
     await User.insert('testuser', 'http://example.com/image.png');
 
     await request(app)

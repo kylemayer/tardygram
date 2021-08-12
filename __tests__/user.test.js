@@ -13,7 +13,7 @@ jest.mock('../lib/middleware/ensure-auth.js', () => (req, res, next) => {
   next();
 });
 
-describe.skip('tardygram routes', () => {
+describe('tardygram routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
