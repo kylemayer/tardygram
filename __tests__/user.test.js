@@ -3,6 +3,7 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 const User = require('../lib/models/User.js');
+const users = require('../lib/controllers/users');
 
 describe('tardygram routes', () => {
   beforeEach(() => {
@@ -19,26 +20,16 @@ describe('tardygram routes', () => {
     });
   });
 
-  it('creates an image with a caption via POST', async () => {
-    const user = await User.insert('testuser', 'http://example.com/image.png'
-    );
+  it('gets a user by username via GET', async () => {
+    const dummy = 'testuser';
+    const dummyPicture = 'http://example.com/image.png';
+    const dummyUser = await User.insert(dummy, dummyPicture);
 
-    const res = await request(app)
-      .post('/api/v1/posts')
-      .send({
-        user: user.id,
-        photo_url: 'http://example.com/image2.png',
-        caption: 'image caption',
-        tags: ['sunny', 'summer', 'water']
-      });
+    const res = await request(app).get(`/api/v1/users/${dummyUser.username}`);
 
-    expect(res.body).toEqual({
-      id: '1',
+    expect(res.body).toEqual({ 
       username: 'testuser',
-      photo_url: 'http://example.com/image2.png',
-      caption: 'image caption',
-      tags: ['sunny', 'summer', 'water'],
+      avatarUrl: 'http://example.com/image.png',
     });
   });
 });
-
