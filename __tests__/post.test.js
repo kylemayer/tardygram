@@ -156,8 +156,8 @@ describe('tardygram post routes', () => {
     });
   });
 
-  it('gets the top 10 most popular posts via GET', async () => {
-    await User.insert();
+  // it('gets the top 10 most popular posts via GET', async () => {
+  //   await User.insert();
 
 
 
@@ -166,5 +166,5 @@ describe('tardygram post routes', () => {
 
 
 
-  });
+  // });
 });
