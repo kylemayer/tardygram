@@ -105,7 +105,7 @@ describe('tardygram post routes', () => {
     });
   });
 
-  it('updates the caption on a post via PATCH', async () => {
+  it.only('updates the caption on a post via PATCH', async () => {
     await User.insert('brionlykindasux111', 'http://example.com/image2.png');
     await Post.insert({
       username: 'brionlykindasux111',
@@ -154,17 +154,5 @@ describe('tardygram post routes', () => {
     expect(res.body).toEqual({
       message: 'that junk gone',
     });
-  });
-
-  it('gets the top 10 most popular posts via GET', async () => {
-    await User.insert();
-
-
-
-
-
-
-
-
   });
 });
