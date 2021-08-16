@@ -42,4 +42,25 @@ describe('comment routes', () => {
       comment: 'Happy Birthday, Maria! uwu owo',
     });
   });
+  it('deletes comment by id', async () => {
+    await User.insert('testuser', 'http://example.com/image.png');
+
+    await Post.insert({
+      username: 'testuser',
+      avatarUrl: 'http://example.com/image2.png',
+      caption: 'image caption',
+      tags: ['sunny', 'summer', 'water'],
+    });
+
+    await request(app).post('/api/v1/comments').send({
+      post: '1',
+      comment_by: 'testuser',
+      comment: 'Happy Birthday, Maria! uwu owo',
+    });
+    const res = await request(app).delete('/api/v1/comments/1');
+
+    expect(res.body).toEqual({
+      message: `comment ${res.comment} has been deleted`
+    });
+  });
 });
