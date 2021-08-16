@@ -105,7 +105,7 @@ describe('tardygram post routes', () => {
     });
   });
 
-  it.only('updates the caption on a post via PATCH', async () => {
+  it('updates the caption on a post via PATCH', async () => {
     await User.insert('brionlykindasux111', 'http://example.com/image2.png');
     await Post.insert({
       username: 'brionlykindasux111',
