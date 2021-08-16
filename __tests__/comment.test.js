@@ -2,6 +2,9 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
+const Comment = require('../lib/models/Comment.js');
+const User = require('../lib/models/User.js');
+const Post = require('../lib/models/Post.js');
 
 jest.mock('../lib/middleware/ensure-auth.js', () => (req, res, next) => {
   req.user = {
@@ -17,20 +20,26 @@ describe('comment routes', () => {
   });
 
   it('posts a comment and the username of the poster', async () => {
-    await Comment.insert({
+    await User.insert('testuser', 'http://example.com/image.png');
+
+    await Post.insert({
       username: 'testuser',
-      comment: 'Happy Birthday, Maria! uwu owo'
+      avatarUrl: 'http://example.com/image2.png',
+      caption: 'image caption',
+      tags: ['sunny', 'summer', 'water'],
     });
 
-    const res = await request(app)
-      .post('/api/v1/comments')
-      .send({
-        comment: 'Happy Birthday, Maria! uwu owo'
-      });
+    const res = await request(app).post('/api/v1/comments').send({
+      post: '1',
+      comment_by: 'testuser',
+      comment: 'Happy Birthday, Maria! uwu owo',
+    });
 
     expect(res.body).toEqual({
-      username: 'testuser',
-      comment: 'Happy Birthday, Maria! uwu owo'
+      id: '1',
+      post: '1',
+      comment_by: 'testuser',
+      comment: 'Happy Birthday, Maria! uwu owo',
     });
   });
 });
