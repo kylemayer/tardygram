@@ -15,7 +15,6 @@ CREATE TABLE posts (
     tags TEXT[]
 );
 
-
 CREATE TABLE comments (
      id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
      comment_by TEXT NOT NULL REFERENCES users(github_username),
