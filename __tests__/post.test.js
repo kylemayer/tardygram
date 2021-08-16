@@ -13,12 +13,7 @@ describe('tardygram post routes', () => {
   });
 
   it('creates an image with a caption via POST', async () => {
-    await User.insert({
-      username: 'testuser',
-      avatarUrl: 'http://example.com/image.png',
-      caption: 'captiony caption',
-      tags: ['taggy', 'soi', 'boi'],
-    });
+    await User.insert('testuser', 'http://example.com/image.png');
 
     const res = await request(app)
       .post('/api/v1/posts')
@@ -39,12 +34,7 @@ describe('tardygram post routes', () => {
   });
 
   it('gets a list of posts', async () => {
-    await User.insert({
-      username: 'testuser',
-      avatarUrl: 'http://example.com/image.png',
-      caption: 'captiony caption',
-      tags: ['taggy', 'soi', 'boi'],
-    });
+    await User.insert('testuser', 'http://example.com/image.png');
 
     const post1 = {
       username: 'testuser',
@@ -79,12 +69,7 @@ describe('tardygram post routes', () => {
   });
 
   it('gets post by id', async () => {
-    await User.insert({
-      username: 'testuser',
-      avatarUrl: 'http://example.com/image.png',
-      caption: 'captiony caption',
-      tags: ['taggy', 'soi', 'boi'],
-    });
+    await User.insert('testuser', 'http://example.com/image.png');
 
     await request(app)
       .post('/api/v1/posts')
@@ -134,12 +119,7 @@ describe('tardygram post routes', () => {
   });
 
   it('deletes post by id', async () => {
-    await User.insert({
-      username: 'testuser',
-      avatarUrl: 'http://example.com/image.png',
-      caption: 'captiony caption',
-      tags: ['taggy', 'soi', 'boi'],
-    });
+    await User.insert('testuser', 'http://example.com/image.png');
 
     await request(app)
       .post('/api/v1/posts')
