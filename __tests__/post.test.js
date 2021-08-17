@@ -4,6 +4,7 @@ const request = require('supertest');
 const app = require('../lib/app');
 const User = require('../lib/models/User.js');
 const Post = require('../lib/models/Post.js');
+const Comment = require('../lib/models/Comment');
 
 // const caption = { caption: 'bri is a soi boi' };
 
@@ -114,6 +115,52 @@ describe('tardygram post routes', () => {
           avatarUrl: 'http://example.com/image2.png',
           caption: 'bri is a soi boi',
           tags: ['sunny', 'summer', 'water'],
+        });
+      });
+  });
+
+  it('gets the top 10 posts with the most comments', async () => {
+    await User.insert('teenwoof', 'http://kitter.com/image.png');
+    await User.insert('bleezy', 'http://pupper.com/image.png');
+
+    await Post.insert({
+      username: 'jeep',
+      avatarUrl: 'http://beepbeep.com/image2.png',
+      caption: 'honk honk',
+      tags: ['honk', 'beep', 'toot'],
+    });
+    await Post.insert({
+      username: 'meli',
+      avatarUrl: 'http://snek.com/image2.png',
+      caption: 'hiss, etc',
+      tags: ['snek', 'slither', 'ssss'],
+    });
+
+    await Comment.insert({
+      post: '1',
+      comment_by: 'bleezy',
+      comment: 'THAT IS MY PURSE, I DO NOT KNOW YOU!',
+    });
+    await Comment.insert({
+      post: '1',
+      comment_by: 'teenwoof',
+      comment: 'ew what',
+    });
+    await Comment.insert({
+      post: '2',
+      comment_by: 'bleezy',
+      comment: 'how you doin',
+    });
+
+    return request(app)
+      .getMostPopular('/api/v1/posts/popular')
+      .then((res) => {
+        expect(res.body).toEqual({
+          id: '1',
+          username: 'jeep',
+          avatarUrl: 'http://beepbeep.com/image2.png',
+          caption: 'honk honk',
+          tags: ['honk', 'beep', 'toot'],
         });
       });
   });
