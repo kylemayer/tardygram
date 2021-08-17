@@ -124,13 +124,13 @@ describe('tardygram post routes', () => {
     await User.insert('bleezy', 'http://pupper.com/image.png');
 
     await Post.insert({
-      username: 'jeep',
+      username: 'teenwoof',
       avatarUrl: 'http://beepbeep.com/image2.png',
       caption: 'honk honk',
       tags: ['honk', 'beep', 'toot'],
     });
     await Post.insert({
-      username: 'meli',
+      username: 'bleezy',
       avatarUrl: 'http://snek.com/image2.png',
       caption: 'hiss, etc',
       tags: ['snek', 'slither', 'ssss'],
@@ -153,15 +153,24 @@ describe('tardygram post routes', () => {
     });
 
     return request(app)
-      .getMostPopular('/api/v1/posts/popular')
+      .get('/api/v1/posts/popular')
       .then((res) => {
-        expect(res.body).toEqual({
-          id: '1',
-          username: 'jeep',
-          avatarUrl: 'http://beepbeep.com/image2.png',
-          caption: 'honk honk',
-          tags: ['honk', 'beep', 'toot'],
-        });
+        expect(res.body).toEqual([
+          {
+            id: '1',
+            username: 'teenwoof',
+            avatarUrl: 'http://beepbeep.com/image2.png',
+            caption: 'honk honk',
+            tags: ['honk', 'beep', 'toot'],
+          },
+          {
+            id: '2',
+            username: 'bleezy',
+            avatarUrl: 'http://snek.com/image2.png',
+            caption: 'hiss, etc',
+            tags: ['snek', 'slither', 'ssss'],
+          },
+        ]);
       });
   });
 
