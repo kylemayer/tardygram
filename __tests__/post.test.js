@@ -6,8 +6,6 @@ const User = require('../lib/models/User.js');
 const Post = require('../lib/models/Post.js');
 const Comment = require('../lib/models/Comment');
 
-// const caption = { caption: 'bri is a soi boi' };
-
 describe('tardygram post routes', () => {
   beforeEach(() => {
     return setup(pool);
@@ -19,7 +17,6 @@ describe('tardygram post routes', () => {
     const res = await request(app)
       .post('/api/v1/posts')
       .send({
-        // user: user.id,
         avatarUrl: 'http://example.com/image2.png',
         caption: 'image caption',
         tags: ['sunny', 'summer', 'water'],
